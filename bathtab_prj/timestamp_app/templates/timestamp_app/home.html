@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BathTab</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+        }
+        .tabs {
+            display: flex;
+            gap: 1em;
+            margin-bottom: 1em;
+        }
+        .tab {
+            padding: 0.5em 1em;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+        .tab-content {
+            border: 1px solid #333;
+            padding: 1em;
+        }
+    </style>
+    <script>
+        function showTab(id) {
+            document.getElementById('pee').style.display = 'none';
+            document.getElementById('pill').style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+
+<h1>BathTab</h1>
+
+<div class="tabs">
+    <div class="tab" onclick="showTab('pee')">Pee &amp; Poo</div>
+    <div class="tab" onclick="showTab('pill')">Pill</div>
+</div>
+
+<div class="tab-content" id="pee">
+    <h2>Pee &amp; Poo</h2>
+    <p>Log bodily events here.</p>
+    <button>Pee</button>
+    <button>Poo</button>
+</div>
+
+<div class="tab-content" id="pill" style="display: none;">
+    <h2>Pill</h2>
+    <p>Log pill intake here.</p>
+    <button>Take Pill</button>
+</div>
+
+</body>
+</html>
