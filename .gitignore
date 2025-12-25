@@ -1,3 +1,4 @@
+.emacs.desktop*
 # --- Python ---
 __pycache__/
 *.py[cod]
