@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>BathTab</title>
+        <style>
+         body {
+             font-family: sans-serif;
+             margin: 2em;
+         }
+         .tabs {
+             display: flex;
+             gap: 1em;
+             margin-bottom: 1em;
+         }
+         .tab {
+             padding: 0.5em 1em;
+             border: 1px solid #333;
+             text-decoration: none;
+             color: black;
+         }
+         .active {
+             background: #333;
+             color: white;
+         }
+         .content {
+             border: 1px solid #333;
+             padding: 1em;
+         }
+        </style>
+    </head>
+    <body>
+
+        <h1>BathTab</h1>
+
+        <div class="tabs">
+            <a href="{% url 'pee' %}"
+               class="tab {% if request.resolver_match.url_name == 'pee' %}active{% endif %}">
+                Pee &amp; Poo
+            </a>
+
+            <a href="{% url 'pill' %}"
+               class="tab {% if request.resolver_match.url_name == 'pill' %}active{% endif %}">
+                Pill
+            </a>
+        </div>
+
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+
+    </body>
+</html>

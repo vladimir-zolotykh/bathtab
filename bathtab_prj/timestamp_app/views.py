@@ -1,5 +1,9 @@
 from django.shortcuts import render
 
 
-def home(request):
-    return render(request, "timestamp_app/home.html")
+def pee(request):
+    return render(request, "timestamp_app/pee.html")
+
+
+def pill(request):
+    return render(request, "timestamp_app/pill.html")
