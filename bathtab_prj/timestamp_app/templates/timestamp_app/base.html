@@ -82,6 +82,12 @@
                class="tab {% if request.resolver_match.url_name == 'pill' %}active{% endif %}">
                 Pill
             </a>
+
+            <a href="{% url 'weight' %}"
+               class="tab {% if request.resolver_match.url_name == 'weight' %}active{% endif %}">
+                Weight
+            </a>
+
         </div>
 
         <div class="content">

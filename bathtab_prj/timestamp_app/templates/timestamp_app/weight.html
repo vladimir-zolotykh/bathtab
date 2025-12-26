@@ -1,0 +1,36 @@
+{% extends "timestamp_app/base.html" %}
+
+{% block content %}
+
+<form method="post" action="{% url 'weight_add' %}">
+    {% csrf_token %}
+    <label>
+        Weight (kg):
+        <input type="number"
+               name="weight"
+               step="0.01"
+               required
+               value="{{ last_weight }}">
+    </label>
+    <button type="submit">Save</button>
+</form>
+
+<hr>
+
+<ul>
+    {% for w in weights %}
+    <li>
+        {{ w.created_at|date:"Y-m-d H:i" }} — {{ w.weight }} kg
+        <form method="post"
+              action="{% url 'weight_delete' w.pk %}"
+              style="display:inline">
+            {% csrf_token %}
+            <button type="submit">✕</button>
+        </form>
+    </li>
+    {% empty %}
+    <li>No weight records yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
