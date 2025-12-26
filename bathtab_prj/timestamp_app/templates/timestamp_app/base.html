@@ -3,32 +3,71 @@
     <head>
         <meta charset="UTF-8">
         <title>BathTab</title>
+
         <style>
          body {
              font-family: sans-serif;
-             margin: 2em;
+             margin: 0;
+             background: #e5e5e5;
          }
+
+         h1 {
+             margin: 1rem;
+         }
+
+         /* --- Tabs container --- */
          .tabs {
              display: flex;
-             gap: 1em;
-             margin-bottom: 1em;
+             padding-left: 1rem;
+             background: #d0d0d0;
+             border-bottom: 1px solid #999;
          }
+
+         /* --- Individual tab --- */
          .tab {
-             padding: 0.5em 1em;
-             border: 1px solid #333;
+             position: relative;
+             top: 1px;
+             padding: 0.6em 1.2em;
+             margin-right: 0.3em;
+
+             background: #c0c0c0;
+             border: 1px solid #999;
+             border-bottom: none;
+
+             border-radius: 6px 6px 0 0;
              text-decoration: none;
-             color: black;
+             color: #000;
+
+             font-size: 0.95rem;
          }
-         .active {
-             background: #333;
-             color: white;
+
+         /* --- Hover (inactive tabs only) --- */
+         .tab:hover {
+             background: #d8d8d8;
          }
+
+         /* --- Active tab --- */
+         .tab.active {
+             background: #ffffff;
+             border-bottom: 1px solid #ffffff;
+             font-weight: bold;
+             z-index: 2;
+         }
+
+         /* --- Content area --- */
          .content {
-             border: 1px solid #333;
-             padding: 1em;
+             background: #ffffff;
+             border-top: none;
+             border-left: 1px solid #999;
+             border-right: 1px solid #999;
+             border-bottom: 1px solid #999;
+
+             padding: 1.5em;
+             margin: 0 1rem 1rem 1rem;
          }
         </style>
     </head>
+
     <body>
 
         <h1>BathTab</h1>
