@@ -34,12 +34,13 @@
         <h1>BathTab</h1>
 
         <div class="tabs">
-            <a href="{% url 'pee' %}"
+            <!-- Open in new browser tab -->
+            <a href="{% url 'pee' %}" target="_blank"
                class="tab {% if request.resolver_match.url_name == 'pee' %}active{% endif %}">
                 Pee &amp; Poo
             </a>
 
-            <a href="{% url 'pill' %}"
+            <a href="{% url 'pill' %}" target="_blank"
                class="tab {% if request.resolver_match.url_name == 'pill' %}active{% endif %}">
                 Pill
             </a>
