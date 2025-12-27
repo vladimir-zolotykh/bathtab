@@ -2,7 +2,49 @@
 
 {% block content %}
 <h2>Pill</h2>
-<p>Log pill intake here.</p>
 
-<button>Take Pill</button>
+<form method="post" action="{% url 'pill_add' %}">
+    {% csrf_token %}
+
+    <label for="id_note_text">Note:</label>
+    {{ form.note_text }}
+
+    <datalist id="pill-note-list">
+        {% for note in notes %}
+        <option value="{{ note.text }}">
+            {% endfor %}
+    </datalist>
+
+    <button type="submit">Take Pill</button>
+</form>
+
+<hr>
+
+<h3>Recent pill intakes</h3>
+<ul>
+    {% for log in pill_logs %}
+    <li>
+        {{ log.taken_at|date:"Y-m-d H:i" }}
+        {% if log.note %} — {{ log.note.text }}{% endif %}
+        <a href="{% url 'pill_delete' log.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No pill entries yet.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h3>Known notes (cleanup)</h3>
+<ul>
+    {% for note in notes %}
+    <li>
+        {{ note.text }}
+        <a href="{% url 'pill_note_delete' note.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No notes.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
