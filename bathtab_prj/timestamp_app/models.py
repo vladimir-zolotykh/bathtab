@@ -8,7 +8,6 @@ class WeightLog(models.Model):
         decimal_places=2,
         help_text="Body weight in kg",
     )
-    # taken_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
