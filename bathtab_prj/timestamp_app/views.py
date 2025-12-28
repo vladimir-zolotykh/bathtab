@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
+from django.views.generic import UpdateView
 from .models import PillLog, PillNote
 
 from .models import WeightLog
@@ -63,4 +64,11 @@ class PillDeleteView(DeleteView):
 
 class PillNoteDeleteView(DeleteView):
     model = PillNote
+    success_url = reverse_lazy("pill")
+
+
+class PillUpdateView(UpdateView):
+    model = PillLog
+    form_class = PillLogForm
+    template_name = "timestamp_app/pill_edit.html"
     success_url = reverse_lazy("pill")

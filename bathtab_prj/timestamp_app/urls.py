@@ -22,4 +22,5 @@ urlpatterns = [
         views.WeightDeleteView.as_view(),
         name="weight_delete",
     ),
+    path("pill/<int:pk>/edit/", views.PillUpdateView.as_view(), name="pill_edit"),
 ]

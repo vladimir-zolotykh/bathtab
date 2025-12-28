@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class WeightLog(models.Model):
@@ -7,6 +8,7 @@ class WeightLog(models.Model):
         decimal_places=2,
         help_text="Body weight in kg",
     )
+    # taken_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -27,9 +29,7 @@ class PillNote(models.Model):
 
 
 class PillLog(models.Model):
-    taken_at = models.DateTimeField(
-        auto_now_add=True, help_text="When the pill was taken"
-    )
+    taken_at = models.DateTimeField(default=timezone.now)
     note = models.ForeignKey(
         PillNote,
         on_delete=models.SET_NULL,

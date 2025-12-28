@@ -26,6 +26,7 @@
     <li>
         {{ log.taken_at|date:"Y-m-d H:i" }}
         {% if log.note %} — {{ log.note.text }}{% endif %}
+        <a href="{% url 'pill_edit' log.pk %}">edit</a>
         <a href="{% url 'pill_delete' log.pk %}">delete</a>
     </li>
     {% empty %}
