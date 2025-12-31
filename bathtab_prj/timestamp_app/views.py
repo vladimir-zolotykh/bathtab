@@ -109,11 +109,19 @@ class PillListView(ListView):
 class PillCreateView(CreateView):
     model = PillLog
     form_class = PillLogForm
+    template_name = "timestamp_app/pill.html"
     success_url = reverse_lazy("pill")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["pill_logs"] = PillLog.objects.all()
+        context["notes"] = PillNote.objects.all()
+        return context
 
 
 class PillDeleteView(DeleteView):
     model = PillLog
+    template_name = "timestamp_app/confirm_delete.html"
     success_url = reverse_lazy("pill")
 
 
