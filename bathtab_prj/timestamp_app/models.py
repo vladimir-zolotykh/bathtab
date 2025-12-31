@@ -2,6 +2,33 @@ from django.db import models
 from django.utils import timezone
 
 
+class PeeLog(models.Model):
+    occurred_at = models.DateTimeField(default=timezone.now)
+    volume_ml = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="Volume in ml (optional)",
+    )
+
+    class Meta:
+        ordering = ["-occurred_at"]
+
+    def __str__(self):
+        if self.volume_ml:
+            return f"Pee {self.volume_ml} ml @ {self.occurred_at:%Y-%m-%d %H:%M}"
+        return f"Pee @ {self.occurred_at:%Y-%m-%d %H:%M}"
+
+
+class PooLog(models.Model):
+    occurred_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["-occurred_at"]
+
+    def __str__(self):
+        return f"Poo @ {self.occurred_at:%Y-%m-%d %H:%M}"
+
+
 class WeightLog(models.Model):
     weight = models.DecimalField(
         max_digits=5,

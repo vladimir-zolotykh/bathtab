@@ -1,9 +1,47 @@
 {% extends "timestamp_app/base.html" %}
 
 {% block content %}
-<h2>Pee &amp; Poo</h2>
-<p>Log bodily events here.</p>
+<h2>Pee</h2>
 
-<button>Pee</button>
-<button>Poo</button>
+<form method="post" action="{% url 'pee_add' %}">
+    {% csrf_token %}
+    {{ pee_form.as_p }}
+    <button type="submit">Add Pee</button>
+</form>
+
+<ul>
+    {% for log in pee_logs %}
+    <li>
+        {{ log.occurred_at|date:"Y-m-d H:i" }}
+        {% if log.volume_ml %} — {{ log.volume_ml }} ml{% endif %}
+        <a href="{% url 'pee_edit' log.pk %}">edit</a>
+        <a href="{% url 'pee_delete' log.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No pee records.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h2>Poo</h2>
+
+<form method="post" action="{% url 'poo_add' %}">
+    {% csrf_token %}
+    {{ poo_form.as_p }}
+    <button type="submit">Add Poo</button>
+</form>
+
+<ul>
+    {% for log in poo_logs %}
+    <li>
+        {{ log.occurred_at|date:"Y-m-d H:i" }}
+        <a href="{% url 'poo_edit' log.pk %}">edit</a>
+        <a href="{% url 'poo_delete' log.pk %}">delete</a>
+    </li>
+    {% empty %}
+    <li>No poo records.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

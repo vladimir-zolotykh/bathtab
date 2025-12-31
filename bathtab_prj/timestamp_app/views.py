@@ -4,16 +4,71 @@ from django.views.generic import ListView, CreateView, DeleteView
 from django.views.generic import UpdateView
 from .models import PillLog, PillNote
 
-from .models import WeightLog
+from .models import WeightLog, PeeLog, PooLog
 from .forms import PillLogForm
+from .forms import PeeLogForm, PooLogForm
 
 
-def pee(request):
-    return render(request, "timestamp_app/pee.html")
+class BaseLogUpdateView(UpdateView):
+    template_name = "timestamp_app/log_edit.html"
+
+    def get_success_url(self):
+        return reverse_lazy("pee")
 
 
-def pill(request):
-    return render(request, "timestamp_app/pill.html")
+class PeePooListView(ListView):
+    template_name = "timestamp_app/pee.html"
+    context_object_name = "pee_logs"
+
+    def get_queryset(self):
+        return PeeLog.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["poo_logs"] = PooLog.objects.all()
+        context["pee_form"] = PeeLogForm()
+        context["poo_form"] = PooLogForm()
+        return context
+
+
+class PeeCreateView(CreateView):
+    model = PeeLog
+    form_class = PeeLogForm
+    success_url = reverse_lazy("pee")
+
+
+class PooCreateView(CreateView):
+    model = PooLog
+    form_class = PooLogForm
+    success_url = reverse_lazy("pee")
+
+
+# def pee(request):
+#     return render(request, "timestamp_app/pee.html")
+
+
+# def pill(request):
+#     return render(request, "timestamp_app/pill.html")
+
+
+class PeeDeleteView(DeleteView):
+    model = PeeLog
+    success_url = reverse_lazy("pee")
+
+
+class PooDeleteView(DeleteView):
+    model = PooLog
+    success_url = reverse_lazy("pee")
+
+
+class PeeUpdateView(BaseLogUpdateView):
+    model = PeeLog
+    form_class = PeeLogForm
+
+
+class PooUpdateView(BaseLogUpdateView):
+    model = PooLog
+    form_class = PooLogForm
 
 
 class WeightListView(ListView):

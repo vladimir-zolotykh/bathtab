@@ -1,5 +1,23 @@
 from django import forms
-from .models import PillLog, PillNote
+from .models import PillLog, PillNote, PeeLog, PooLog
+
+
+class PeeLogForm(forms.ModelForm):
+    class Meta:
+        model = PeeLog
+        fields = ["occurred_at", "volume_ml"]
+        widgets = {
+            "occurred_at": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+        }
+
+
+class PooLogForm(forms.ModelForm):
+    class Meta:
+        model = PooLog
+        fields = ["occurred_at"]
+        widgets = {
+            "occurred_at": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+        }
 
 
 class PillLogForm(forms.ModelForm):
