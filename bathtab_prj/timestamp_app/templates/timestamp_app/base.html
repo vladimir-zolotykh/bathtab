@@ -2,6 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+
+        <!-- REQUIRED FOR MOBILE -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>BathTab</title>
 
         <style>
@@ -41,12 +45,10 @@
              font-size: 0.95rem;
          }
 
-         /* --- Hover (inactive tabs only) --- */
          .tab:hover {
              background: #d8d8d8;
          }
 
-         /* --- Active tab --- */
          .tab.active {
              background: #ffffff;
              border-bottom: 1px solid #ffffff;
@@ -64,6 +66,35 @@
 
              padding: 1.5em;
              margin: 0 1rem 1rem 1rem;
+         }
+
+         /* ==========================
+            MOBILE IMPROVEMENTS ONLY
+            ========================== */
+         @media (max-width: 600px) {
+
+             body {
+                 font-size: 1.15rem;
+             }
+
+             h1 {
+                 margin: 0.5rem;
+                 font-size: 1.4rem;
+             }
+
+             .tabs {
+                 padding-left: 0.5rem;
+             }
+
+             .tab {
+                 font-size: 1.1rem;
+                 padding: 0.8em 1.1em;
+             }
+
+             .content {
+                 margin: 0 0.5rem 0.5rem 0.5rem;
+                 padding: 1em;
+             }
          }
         </style>
     </head>
@@ -87,7 +118,6 @@
                class="tab {% if request.resolver_match.url_name == 'weight' %}active{% endif %}">
                 Weight
             </a>
-
         </div>
 
         <div class="content">
