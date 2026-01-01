@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView
 from django.views.generic import UpdateView
@@ -14,6 +13,17 @@ class BaseLogUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("pee")
+
+
+class BaseLogDeleteView(DeleteView):
+    template_name = "timestamp_app/confirm_delete.html"
+
+    def get_success_url(self):
+        """
+        Redirect back to the page the user came from if possible,
+        otherwise fall back to Pee tab.
+        """
+        return self.request.META.get("HTTP_REFERER", reverse_lazy("pee"))
 
 
 class PeePooListView(ListView):
@@ -43,22 +53,12 @@ class PooCreateView(CreateView):
     success_url = reverse_lazy("pee")
 
 
-# def pee(request):
-#     return render(request, "timestamp_app/pee.html")
-
-
-# def pill(request):
-#     return render(request, "timestamp_app/pill.html")
-
-
-class PeeDeleteView(DeleteView):
+class PeeDeleteView(BaseLogDeleteView):
     model = PeeLog
-    success_url = reverse_lazy("pee")
 
 
-class PooDeleteView(DeleteView):
+class PooDeleteView(BaseLogDeleteView):
     model = PooLog
-    success_url = reverse_lazy("pee")
 
 
 class PeeUpdateView(BaseLogUpdateView):
@@ -89,9 +89,8 @@ class WeightCreateView(CreateView):
     success_url = reverse_lazy("weight")
 
 
-class WeightDeleteView(DeleteView):
+class WeightDeleteView(BaseLogDeleteView):
     model = WeightLog
-    success_url = reverse_lazy("weight")
 
 
 class PillListView(ListView):
@@ -119,15 +118,12 @@ class PillCreateView(CreateView):
         return context
 
 
-class PillDeleteView(DeleteView):
+class PillDeleteView(BaseLogDeleteView):
     model = PillLog
-    template_name = "timestamp_app/confirm_delete.html"
-    success_url = reverse_lazy("pill")
 
 
-class PillNoteDeleteView(DeleteView):
+class PillNoteDeleteView(BaseLogDeleteView):
     model = PillNote
-    success_url = reverse_lazy("pill")
 
 
 class PillUpdateView(UpdateView):
