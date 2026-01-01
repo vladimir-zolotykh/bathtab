@@ -1,6 +1,5 @@
 .emacs.desktop*
-__SOW__.txt
-__TAKE_PILL__.txt
+SOW/
 # --- Python ---
 __pycache__/
 *.py[cod]
