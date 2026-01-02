@@ -6,6 +6,9 @@ from .models import PillLog, PillNote
 from .models import WeightLog, PeeLog, PooLog
 from .forms import PillLogForm
 from .forms import PeeLogForm, PooLogForm
+from django.shortcuts import redirect
+from django.contrib import messages
+from django.http import Http404
 
 
 class BaseLogUpdateView(UpdateView):
@@ -18,12 +21,33 @@ class BaseLogUpdateView(UpdateView):
 class BaseLogDeleteView(DeleteView):
     template_name = "timestamp_app/confirm_delete.html"
 
+    def get_object(self, queryset=None):
+        return super().get_object(queryset)
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            messages.info(request, "This item has already been deleted.")
+            return redirect(self.get_success_url())
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
         """
         Redirect back to the page the user came from if possible,
         otherwise fall back to Pee tab.
         """
-        return self.request.META.get("HTTP_REFERER", reverse_lazy("pee"))
+        # First try ?next=... in the URL
+        next_url = self.request.GET.get("next")
+        if next_url:
+            return next_url
+
+        referer = self.request.META.get("HTTP_REFERER")
+        # Avoid redirecting back to the delete page itself
+        if referer and not referer.endswith(self.request.path):
+            return referer
+
+        return reverse_lazy("pee")
 
 
 class PeePooListView(ListView):
