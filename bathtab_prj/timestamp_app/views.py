@@ -21,32 +21,24 @@ class BaseLogUpdateView(UpdateView):
 class BaseLogDeleteView(DeleteView):
     template_name = "timestamp_app/confirm_delete.html"
 
-    def get_object(self, queryset=None):
-        return super().get_object(queryset)
-
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.object = self.get_object()
+            return super().dispatch(request, *args, **kwargs)
         except Http404:
             messages.info(request, "This item has already been deleted.")
             return redirect(self.get_success_url())
-        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        """
-        Redirect back to the page the user came from if possible,
-        otherwise fall back to Pee tab.
-        """
-        # First try ?next=... in the URL
-        next_url = self.request.GET.get("next")
-        if next_url:
+        # 1) Explicit redirect target
+        if next_url := self.request.GET.get("next"):
             return next_url
 
+        # 2) Referrer, if it is not the delete page itself
         referer = self.request.META.get("HTTP_REFERER")
-        # Avoid redirecting back to the delete page itself
         if referer and not referer.endswith(self.request.path):
             return referer
 
+        # 3) Safe fallback
         return reverse_lazy("pee")
 
 
